@@ -1,17 +1,36 @@
 import { database } from "../../database";
+import { AppError } from "../../errors";
 
 export async function updateCategoryService(id, payload) {
-    let query = "UPDATE categories SET ";
-    const keys = Object.keys(payload);
-    const values = Object.values(payload);
+    const checkingIfNameExists = await database.query(
+        `
+        SELECT  
+            *
+        FROM
+            categories c
+        WHERE   
+            c.name = $1
+    
+    `,
+        [payload.name]
+    );
 
-    keys.forEach((key, index) => {
-        query += `${key} = \$${(index += 1)}, `;
-    });
+    if (checkingIfNameExists.rowCount > 0) {
+        throw new AppError(400, "This category name already exists.");
+    }
 
-    query = query.slice(0, -2);
+    const updateResponse = await database.query(
+        `
+        UPDATE
+            categories
+        SET
+            name = $1
+        WHERE
+            id = $2
+        RETURNING *;
+    `,
+        [payload.name, id]
+    );
 
-    query += ` WHERE id = \$${(keys.length += 1)} RETURNING *;`;
-    const updateResponse = await database.query(query, [...values, id]);
     return updateResponse.rows[0];
 }
