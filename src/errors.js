@@ -12,7 +12,7 @@ function errorHandler(error, request, response, next) {
         return response.status(statusCode).json(message);
     }
 
-    return response.status(500).json({ message: "Internal server error." });
+    return response.status(404).json({ message: "Internal server error." });
 }
 
 export { AppError, errorHandler };
