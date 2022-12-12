@@ -1,27 +1,28 @@
-import pkg from "pg";
-const {Client} = pkg
+import { Client } from "pg";
+import "dotenv/config";
 
+const { DB_USER, DB_HOST, DB, DB_PASSWORD, DB_PORT, NODE_ENV } = process.env;
 const database = new Client(
-  process.env.NODE_ENV === "test"
-    ? {
-        user: process.env.DB_USER,
-        host: "localhost",
-        database: "tests_products",
-        password: process.env.DB_PASSWORD,
-        port: 5432,
-      }
-    : {
-        user: process.env.DB_USER,
-        host: process.env.DB_HOST,
-        database: process.env.DB,
-        password: process.env.DB_PASSWORD,
-        port: process.env.DB_PORT,
-      }
+    NODE_ENV === "test"
+        ? {
+              user: "gabriel",
+              host: "localhost",
+              database: "tests_products",
+              password: "1234",
+              port: 5432,
+          }
+        : {
+              user: DB_USER,
+              host: DB_HOST,
+              database: DB,
+              password: DB_PASSWORD,
+              port: DB_PORT,
+          }
 );
 
-export const startDatabase = async () => {
-  await database.connect();
-  console.log('database conectada')
+const startDatabase = async () => {
+    await database.connect();
+    console.log("Database connected");
 };
 
-export default database;
+export { database, startDatabase };
