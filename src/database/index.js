@@ -5,10 +5,10 @@ const { DB_USER, DB_HOST, DB, DB_PASSWORD, DB_PORT, NODE_ENV } = process.env;
 const database = new Client(
     NODE_ENV === "test"
         ? {
-              user: "gabriel",
-              host: "localhost",
+              user: DB_USER,
+              host: DB_HOST,
               database: "tests_products",
-              password: "1234",
+              password: DB_PASSWORD,
               port: 5432,
           }
         : {
