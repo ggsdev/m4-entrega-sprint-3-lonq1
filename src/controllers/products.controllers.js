@@ -16,7 +16,6 @@ async function createProductController(request, response) {
 }
 
 async function retrieveSpecificProductController(request, response) {
-    console.log(request.params.id);
     const data = await retrieveSpecificProductService(request.params.id);
     return response.status(200).json(data);
 }
