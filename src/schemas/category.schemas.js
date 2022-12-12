@@ -8,6 +8,7 @@ const returnedData = yup.object().shape({
     name: yup.string().max(200),
     id: yup.number(),
 });
+
 const listCategoriesData = yup.array(returnedData);
 
 export { createCategoryShape, returnedData, listCategoriesData };

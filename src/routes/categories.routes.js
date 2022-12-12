@@ -31,7 +31,7 @@ categoriesRoutes.get(
 categoriesRoutes.patch(
     "/:id",
     checkIfExistsMiddleware(route),
-    validSchemaMiddleware(updateProductShape),
+    validSchemaMiddleware(createCategoryShape),
     updateCategoryController
 );
 categoriesRoutes.delete(
