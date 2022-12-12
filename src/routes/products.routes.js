@@ -11,6 +11,7 @@ import { checkIfExistsMiddleware } from "../middlewares/checkIfExists.middleware
 import { validSchemaMiddleware } from "../middlewares/validSchema.middleware";
 import {
     createProductShape,
+    returnedData,
     updateProductShape,
 } from "../schemas/products.schemas";
 
@@ -26,6 +27,7 @@ productsRoutes.post(
 productsRoutes.get(
     "/:id",
     checkIfExistsMiddleware(route),
+    validSchemaMiddleware(returnedData),
     retrieveSpecificProductController
 );
 

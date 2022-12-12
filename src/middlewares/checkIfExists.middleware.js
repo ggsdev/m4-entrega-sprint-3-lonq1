@@ -1,5 +1,4 @@
 import { database } from "../database";
-import { AppError } from "../errors";
 
 export const checkIfExistsMiddleware =
     (type) => async (request, response, next) => {
